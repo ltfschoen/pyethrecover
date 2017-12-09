@@ -131,13 +131,13 @@ class DecryptionException(Exception):
 def getseed(encseed, pw, ethaddr):
     try:
         seed = aes.decryptData(pw, binascii.unhexlify(encseed))
-    except Exception, e:
+    except Exception as e:
         raise DecryptionException("AES Decryption error. Bad password?")
     try:
         ethpriv = sha3(seed)
         eth_privtoaddr(ethpriv)
         assert eth_privtoaddr(ethpriv) == ethaddr
-    except Exception, e:
+    except Exception as e:
         # print ("eth_priv = %s" % eth_privtoaddr(ethpriv))
         # print ("ethadd = %s" % ethaddr)
         # traceback.print_exc()
@@ -165,7 +165,7 @@ def crack(wallet_filename, grammar):
     w = json.loads(t)
     try:
         Parallel(n_jobs=-1)(delayed(attempt)(w, pw) for pw in generate_all(grammar,''))
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         while True:
             sys.stdout.write('\a')
@@ -173,7 +173,7 @@ def crack(wallet_filename, grammar):
 
 def generate_all(el, tr):
     if el:
-        for j in xrange(len(el[0])):
+        for j in range(len(el[0])):
             for w in generate_all(el[1:], tr + el[0][j]):
                 yield w
     else:
@@ -219,7 +219,7 @@ def __main__():
 
     try:
         Parallel(n_jobs=-1)(delayed(attempt)(w, pw) for pw in pwds)
-    except Exception, e:
+    except Exception as e:
         traceback.print_exc()
         while True:
             sys.stdout.write('\a')

@@ -78,3 +78,10 @@ and call it like so...
 
 Check out the comments in `password_spec.txt` for more details
 
+Example3
+=======
+
+```
+python pyethrecover.py -w ethereum-wallet-for-my-presale-address.json -s password_spec.txt
+```
+
